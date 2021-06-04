@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ProjRecipe</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <%= stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/simplex/bootstrap.min.css' %>
+    <%= javascript_include_tag 'https://code.jquery.com/jquery-3.3.1.min.js'%>
+    <%= javascript_include_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' %>
+  </head>
+
+  <body>
+    <header class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container">
+        <% if user_signed_in? %>
+          <%= link_to "Recipes", recipes_path %>
+          <%= link_to "Setting", edit_user_registration_path %>
+          <%= link_to "My Favorite", users_favorites_path %>
+          <%= link_to "My Recipes", users_myrecipes_path %>
+          <%= link_to "Logout", destroy_user_session_path, :method => :delete %>
+        <% else %>
+          <%= link_to "Recipes", recipes_path %>
+          <%= link_to "Log in", new_user_session_path %>
+          <%= link_to "Sign up", new_user_registration_path %>  
+        <% end %> 
+      </div>
+    </header>
+    <div class="container">
+      <%= yield %>
+    </div>
+    <hr>
+    <% if user_signed_in? %>
+      Logged in as <%= current_user.email%> [<%= link_to 'Logout', destroy_user_session_path, :method => :delete%>]
+    <% end %>
+    <% if not flash.empty? %> 
+      <hr>
+      <h3>Notifications:</h3>
+      <% flash.each do |type, msg| %>
+        <div>
+          <%= msg %>
+        </div>
+      <% end %>
+    <% end %>
+  </body>
+</html>

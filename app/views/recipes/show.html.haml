@@ -1,0 +1,116 @@
+:css
+    table, th {
+        border: 1px solid black;
+        text-align-last: center;
+    }
+    h1 {
+        text-align-last: center;
+    }
+
+    
+%h1 #{@recipe.title}
+ 
+%p
+    Rating:
+    = @recipe.averageScore
+%p
+    Created by:
+    = @recipe.user.email 
+
+- if FavoriteRecipe.find_by(:user_id => current_user, :recipe_id => @recipe.id) != nil
+    = link_to "Remove from Favorites", favorite_recipe_path(@recipe, type: "unfavorite"), method: :put, :class => 'btn btn-outline-danger'
+- else
+    = link_to "Add to Favorites", favorite_recipe_path(@recipe, type: "favorite"), method: :put, :class => 'btn btn-outline-success'
+
+%br
+%br
+
+- if !@recipe.image.nil?
+    %img.img-thumbnail{:style => "height: 200px; width: 30%; display: block;", :src => "#{@recipe.image.url}", :alt => "Recipe image"}
+
+
+%table{style: "width:20%", align: "right"}
+    %tr
+        %th           
+            Category:
+            = @recipe.category 
+    %tr
+        %th  
+            Dosage:
+            = @recipe.dosage
+    %tr 
+        %th  
+            Difficulty: 
+            = @recipe.difficulty 
+    %tr 
+        %th  
+            Preparation Time: 
+            = @recipe.preparation 
+
+%br 
+%br 
+%div      
+    Ingredients:
+    = @recipe.ingredients
+
+%hr
+    Preparation:
+    = @recipe.steps
+
+
+%br 
+%br
+
+- if !(@recipe.link.blank?)
+    %div
+    %iframe{:src => "https://www.youtube.com/embed/#{@recipe.video.uid}", :width => "400", :height => "240"}
+- else
+    No video available for this recipe!
+%hr 
+%h4 All Reviews 
+
+- if @recipe.reviews.empty?
+    %p No reviews yet! 
+- @recipe.reviews.each do |review|
+    %p 
+        %bf Comment: 
+        = review.comment 
+        %br
+        %bf Vote: 
+        = review.vote
+        %br 
+        %bf Author: 
+        = review.user.email 
+        %br
+        - if @recipe.user == current_user
+    
+            = link_to 'Destroy', [review.recipe, review],          |
+            method: :delete,                                       |
+            data: { confirm: "Are you sure?" },                    |
+            :class => 'btn btn-outline-primary btn-sm'
+
+%hr
+
+- if @recipe.user != current_user
+    %h4  Add a Review
+    = form_with model: [@recipe, @recipe.reviews.build] do |form|
+        %p 
+            = form.label :comment 
+            %br
+            = form.text_field :comment 
+        %p
+            = form.label :vote 
+            %br
+            = form.collection_select :vote, [1,2,3,4,5,6,7,8,9,10], :to_i, :to_s 
+    
+        %p 
+            = form.submit "Add Review"
+  
+%br
+- if @recipe.user == current_user
+    = link_to 'Delete recipe', recipe_path(@recipe), :method => :delete, data: {confirm: "Are you sure?"}, :class => 'btn btn-outline-primary btn-sm'
+    = link_to 'Edit recipe', edit_recipe_path(@recipe), :class => 'btn btn-outline-danger btn-sm'
+
+%br
+%br
+#{link_to 'Back to recipe list', recipes_path}

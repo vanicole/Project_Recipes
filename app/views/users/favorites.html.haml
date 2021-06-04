@@ -1,0 +1,13 @@
+%h2 Favorite Recipes
+
+- if @recipes.empty?
+    %p No recipe saved as favorite
+- else
+    %br
+    - @recipes.each do |c|
+        = link_to "#{c.title}", recipe_path(c.id), :class => 'btn btn-outline-success'
+        = link_to "Remove from Favorites", favorite_recipe_path(c, type: "unfavorite"), :method => :put
+        %br
+        %br
+    
+#{link_to 'Back to recipe list', recipes_path}

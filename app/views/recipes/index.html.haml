@@ -1,0 +1,43 @@
+:css
+  table, th, td {
+    border: 1px solid black;
+    text-align-last: center;
+  }
+  h1 {
+      text-align-last: center;
+  }
+%br 
+%h1 All Recipes
+%br 
+
+.jumbotron
+  = form_tag recipes_results_path, :method => :get do
+    .form-row
+      .form-group.col-md-6
+        = label_tag :words, 'Search Recipe'
+        = text_field_tag(:words,'',:class => "form-control mr-sm-2", :placeholder => 'Search Recipe', :required => :true, :autofocus => :true)
+      .form-group.col-sm-2
+        = label_tag :category, 'Search By Category' 
+        = select_tag :category, options_for_select(['Primo piatto', 'Secondo piatto', 'Antipasto', 'Contorno', 'Dolce']), :prompt => '-', :class => "form-control new_form_width"
+      .form-group.col-sm-2 
+        = label_tag :orderby, 'Order By'
+        = select_tag :orderby, options_for_select(['A-Z', 'Top Rating'], params[:orderby]), :class => "form-control new_form_width"
+      .form-group.col-sm-2 
+        = label_tag :submit, "Search Recipes", :style => "visibility: hidden; display:block;"
+        = submit_tag 'Search Recipes', :class => 'btn btn-primary'
+%br
+%table{style: "width:100%"}
+  %tr
+    %th Title
+    %th Description
+    %th Rating
+    %th More Info
+  - @recipes.each do |recipe|
+    %tr
+      %td= recipe.title
+      %td= recipe.description
+      %td= recipe.averageScore
+      %td= link_to "Details", recipe_path(recipe)
+%br
+= link_to "Add A New Recipe", new_recipe_path, class: "btn btn-sm btn-primary"
+%br
