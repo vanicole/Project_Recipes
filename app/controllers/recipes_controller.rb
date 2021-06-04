@@ -51,6 +51,7 @@ class RecipesController < ApplicationController
     end
 
     def destroy
+        authorize! :destroy, Recipe, :message => "You are not authorized"
         @recipe = Recipe.find(params[:id])
         @recipe.destroy 
         flash[:notice] = "#{@recipe.title} has been successfully deleted!"

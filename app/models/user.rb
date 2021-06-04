@@ -6,6 +6,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
+         acts_as_user :roles => [:registeredUser]
+
          has_many :reviews, dependent: :destroy
          has_many :recipes, dependent: :destroy
          
@@ -13,7 +15,22 @@ class User < ApplicationRecord
          has_many :favorite_recipes, dependent: :destroy
          has_many :favorites, through: :favorite_recipes, source: :recipe, dependent: :destroy
 
-        
+        def is_registeredUser?
+          return (self.roles_mask & 1) == 1
+        end
+      
+        def set_registeredUser
+          self.roles_mask = (self.roles_mask | 1) 
+          self.save
+        end
+      
+      def unset_registeredUser
+          self.roles_mask = 0 
+          self.save
+        end
+      
+
+
         def self.from_omniauth(access_token)
           data = access_token.info
     

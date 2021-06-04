@@ -16,6 +16,7 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, Review, :message => "You are not authorized"
     @recipe = Recipe.find(params[:recipe_id])
     @review = @recipe.reviews.find(params[:id])
     @review.destroy

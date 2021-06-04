@@ -37,6 +37,8 @@ gem 'devise'
 gem 'omniauth-google-oauth2'
 gem 'omniauth', '~>1.9.1'
 
+gem 'canard', '~> 0.6.2.pre'
+
 gem 'yt', '~> 0.33.4'
 gem 'rails-observers', '~> 0.1.5'
 

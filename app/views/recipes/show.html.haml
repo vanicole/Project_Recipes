@@ -83,12 +83,8 @@
         = review.user.email 
         %br
         - if @recipe.user == current_user
-    
-            = link_to 'Destroy', [review.recipe, review],          |
-            method: :delete,                                       |
-            data: { confirm: "Are you sure?" },                    |
-            :class => 'btn btn-outline-primary btn-sm'
-
+            - if can? :destroy, Recipe
+                %td= link_to 'Destroy', [review.recipe, review], method: :delete, data: { confirm: "Are you sure?" }, :class => 'btn btn-outline-primary btn-sm'
 %hr
 
 - if @recipe.user != current_user
@@ -108,9 +104,10 @@
   
 %br
 - if @recipe.user == current_user
-    = link_to 'Delete recipe', recipe_path(@recipe), :method => :delete, data: {confirm: "Are you sure?"}, :class => 'btn btn-outline-primary btn-sm'
     = link_to 'Edit recipe', edit_recipe_path(@recipe), :class => 'btn btn-outline-danger btn-sm'
-
+    - if can? :destroy, Recipe
+        %td= link_to 'Delete recipe', recipe_path(@recipe), :method => :delete, data: {confirm: "Are you sure?"}, :class => 'btn btn-outline-primary btn-sm'
+    
 %br
 %br
 #{link_to 'Back to recipe list', recipes_path}
