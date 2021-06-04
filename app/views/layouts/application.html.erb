@@ -39,9 +39,15 @@
     
     <% if not current_user.nil? %> 
       <b>Roles : </b> 
-        <% if current_user.is_registeredUser? %>
-          Registered User
-        <%end %>
+      <% if current_user.is_registeredUser? %>
+        Registered User
+      <%end %>
+      <% if current_user.is_admin? %>
+        <%= link_to "Admin", admin_view_path %>
+      <%end %>
+      <% if current_user.is_banned? %>
+        Banned Registered User
+      <%end %>
     <% end %>
     <br>
     <% if user_signed_in? %>

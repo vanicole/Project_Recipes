@@ -6,7 +6,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
-         acts_as_user :roles => [:registeredUser]
+         acts_as_user :roles => [:registeredUser, :admin]
 
          has_many :reviews, dependent: :destroy
          has_many :recipes, dependent: :destroy
@@ -24,11 +24,29 @@ class User < ApplicationRecord
           self.save
         end
       
-      def unset_registeredUser
+        def unset_registeredUser
           self.roles_mask = 0 
           self.save
         end
+
+        def is_banned?
+          return self.roles_mask == 0
+        end
       
+        def is_admin?
+          return (self.roles_mask & 2) == 2
+        end
+      
+        def set_admin
+          self.roles_mask = (self.roles_mask | 2) 
+          self.save
+        end
+      
+        def unset_admin
+          self.roles_mask = (self.roles_mask & 1) 
+          self.save
+        end
+
 
 
         def self.from_omniauth(access_token)

@@ -6,12 +6,16 @@
     %br
     - @recipes.each do |c|
         = link_to "#{c.title}", recipe_path(c.id), :class => 'btn btn-outline-success'
-        = link_to 'Delete recipe', recipe_path(c.id), :method => :delete, data: {confirm: "Are you sure?"}, :class => 'btn btn-outline-primary btn-sm'
-        = link_to 'Edit recipe', edit_recipe_path(c.id), :class => 'btn btn-outline-danger btn-sm'
+        - if !current_user.is_banned?
+            - if can? :destroy, Recipe
+                = link_to 'Delete recipe', recipe_path(c.id), :method => :delete, data: {confirm: "Are you sure?"}, :class => 'btn btn-outline-primary btn-sm'
+            - if can? :edit, Recipe
+                = link_to 'Edit recipe', edit_recipe_path(c.id), :class => 'btn btn-outline-danger btn-sm'
         %br
         %br
 %hr
-= link_to "Add A New Recipe", new_recipe_path, class: "btn btn-sm btn-info"
+- if !current_user.is_banned?
+    = link_to "Add A New Recipe", new_recipe_path, class: "btn btn-sm btn-info"
 %br
 %br
 = link_to 'Back to recipe list', recipes_path

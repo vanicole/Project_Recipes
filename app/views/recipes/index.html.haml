@@ -39,5 +39,6 @@
       %td= recipe.averageScore
       %td= link_to "Details", recipe_path(recipe)
 %br
-= link_to "Add A New Recipe", new_recipe_path, class: "btn btn-sm btn-primary"
+- if user_signed_in? & !current_user.is_banned?
+  %td= link_to "Add A New Recipe", new_recipe_path, class: "btn btn-sm btn-primary"
 %br
