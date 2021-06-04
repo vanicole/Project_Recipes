@@ -39,6 +39,7 @@
       %td= recipe.averageScore
       %td= link_to "Details", recipe_path(recipe)
 %br
-- if user_signed_in? & !current_user.is_banned?
+- if can? :create, Recipe
   %td= link_to "Add A New Recipe", new_recipe_path, class: "btn btn-sm btn-primary"
+
 %br

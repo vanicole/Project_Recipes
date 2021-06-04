@@ -10,6 +10,7 @@ class ReviewsController < ApplicationController
   end
 
   def create
+    authorize! :create, Review, :message => "You are not authorized"
     @recipe = Recipe.find(params[:recipe_id])
     @review = @recipe.reviews.create(review_params)
     redirect_to recipe_path(@recipe)

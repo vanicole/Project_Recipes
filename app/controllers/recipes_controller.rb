@@ -15,6 +15,7 @@ class RecipesController < ApplicationController
 
     # CREATE 2/2
     def create
+        authorize! :create, Recipe, :message => "You are not authorized"
         @recipe = current_user.recipes.create(recipe_params)
         @recipe.video = Video.new(video_params).save
         if @recipe.save
@@ -37,6 +38,7 @@ class RecipesController < ApplicationController
     end
 
     def update 
+        authorize! :update, Recipe, :message => "You are not authorized"
         @recipe = Recipe.find(params[:id])
         if !(params[:recipe][:link].blank?) && (params[:recipe][:link] != @recipe.link)
             @recipe.video = Video.new(video_params)
