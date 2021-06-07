@@ -58,6 +58,7 @@ group :development do
   # Display performance information such as SQL time and flame graphs for each request in your browser.
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem 'rack-mini-profiler', '~> 2.0'
+  gem 'factory_bot_rails', '~> 6.2'
 end
 
 group :test do
@@ -68,7 +69,7 @@ group :test do
   gem 'webdrivers'
   gem 'rexml'
 
-  gem 'cucumber-rails', require: false
+  gem 'cucumber-rails'
   gem 'database_cleaner'
   gem 'launchy'
   gem 'rspec-rails'

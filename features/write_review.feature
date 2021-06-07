@@ -5,6 +5,6 @@ Feature: Add a Review
 
 Scenario:
     Given I am a registered user 
-    #And another users recipe "Tiramisù" exists
-
-    # TERMINARE!
+    And another users recipe 'Tiramisù' exists
+    And I log in
+    #When I go to the 'Tiramisù' recipe page

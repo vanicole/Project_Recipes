@@ -3,6 +3,10 @@ module NavigationHelpers
     def path_to(page_name)
         case page_name
   
+        
+        when /^the (.*) recipe page$/
+            recipe_path(Recipe.find_by(:title => $1))
+
         when /^the home\s?page$/
             '/'
   
@@ -24,10 +28,6 @@ module NavigationHelpers
         when /^the recipes page$/
             '/recipes'
   
-        when /^the user (.*) profile page$/
-            byebug
-            '/users/'+User.find_by(:email => $1).id.to_s
-  
         when /^the users_edit page$/
             edit_user_path(@user)
   
@@ -36,17 +36,7 @@ module NavigationHelpers
   
         when /^the admin page$/
             '/adm'
-  
-        when /^the scannedtokens_show\s?page$/
-            '/scannedtokens/show'
-  
-        when /^the user_token page$/
-            user_token_path(@user, @user.tokens.first)
-
-        when /^the recipe (.*) reviews page$/
-            recipe_reviews_path(Recipe.find_by(:name => $1))
-      
-  
+        
       # Add more mappings here.
       # Here is an example that pulls values out of the Regexp:
       #

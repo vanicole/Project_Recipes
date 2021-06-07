@@ -59,20 +59,15 @@ Given /^I am a logged in admin user$/ do
     login(@user.email, @user.password)
 end
 
-
-
-#Given /^recipe (.*) by another user exists$/ do |recipe|
-#    User.create(:email => 'fake@user.com', :password => 'testtest', :password_confirmation => 'testtest')
-#    login("fake_test", "testtest")
-#    new_recipe(recipe)
-#    visit(destroy_user_session_path)
-#end
-
-Given /^another users recipe (.*) exists$/ do |recipe|
+Given('another users recipe {string} exists') do |recipe|
     User.create(:email => 'fake@user.com', :password => 'testtest', :password_confirmation => 'testtest')
-    login("fake_test", "testtest")
+    login("fake@user.com", "testtest")
     new_recipe(recipe)
     visit(destroy_user_session_path)
+end
+
+When /^(?:|I )go to (.+)$/ do |page_name|
+    visit path_to(page_name)
 end
 
 module LoginSteps
@@ -95,8 +90,8 @@ end
 module RecipeSteps
     def new_recipe(title)
         visit(new_recipe_path)
-        fill_in('Title', :with => title)
-        click_button('Create Recipe')
+        fill_in("Title", :with => title)
+        click_button("Save Changes")
     end
 end
 

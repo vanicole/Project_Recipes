@@ -1,7 +1,7 @@
 <%= form_for @recipe, html: { :multipart => true } do |form| %>
   <div>
     <%= form.label :title %><br>
-    <%= form.text_field :title, :placeholder => "Title" %>
+    <%= form.text_field :title %>
   </div>
 
   <div>
@@ -53,7 +53,7 @@
       <%= form.url_field :link, :class => "form-control", :placeholder => "Youtube link", :pattern => "(?:https?:\/\/)?(?:youtu\.be\/|(?:www\.)?youtube\.com\/watch(?:\.php)?\?.*v=)([a-zA-Z0-9\-_]+)" %>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit "Save Changes" %>
   </div>
 <% end %>
 
