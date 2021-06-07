@@ -1,12 +1,10 @@
 module NavigationHelpers
 
+    # Used for: When /^(?:|I )go to (.+)$/ do |page_name|
+
     def path_to(page_name)
         case page_name
   
-        
-        when /^the (.*) recipe page$/
-            recipe_path(Recipe.find_by(:title => $1))
-
         when /^the home\s?page$/
             '/'
   
@@ -37,6 +35,9 @@ module NavigationHelpers
         when /^the admin page$/
             '/adm'
         
+        when /^the recipe (.*) page$/
+            recipe_path(Recipe.find_by(:title => $1)) 
+
       # Add more mappings here.
       # Here is an example that pulls values out of the Regexp:
       #

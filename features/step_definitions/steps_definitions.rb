@@ -10,13 +10,29 @@ module WithinHelpers
 end
 World(WithinHelpers)
 
-
+Given /^(?:|I )am on (.+)$/ do |page_name|
+    visit path_to(page_name)
+end
 
 Given /^I am a registered user$/ do
     @user = User.create!(:email => 'test@test.com', :password => 'testtest', :password_confirmation => 'testtest')
 end
 
-Given /^I am on the home page$/ do
+Given /^I am not a registered user$/ do
+    @user = nil
+end
+
+Given('I log in as registered user') do 
+    @user = User.create!(id: 100, roles_mask: 1, :email => 'user@test.com', :password => 'testtest')
+    @current_user = @user
+    login(@user.email, @user.password)
+end
+
+
+Given /^I am a logged in admin user$/ do
+    @user = User.create!(id: 100, roles_mask: 3, :email => 'admin@test.com', :password => 'testtest')
+    @current_user = @user
+    login(@user.email, @user.password)
 end
 
 Given /^I am not authenticated$/ do
@@ -43,9 +59,6 @@ Then('I should see {string}') do |string|
     expect(page).to have_content(string)
 end
 
-Given /^I am not a registered user$/ do
-    @user = nil
-end
 
 When /^I register as (.+), (.+)$/ do |email, password|
     register(email, password)
@@ -53,14 +66,9 @@ When /^I register as (.+), (.+)$/ do |email, password|
     @current_user = @user
 end
 
-Given /^I am a logged in admin user$/ do
-    @user = User.create!(id: 100, roles_mask: 3, :email => 'test@test.com', :password => 'testtest')
-    @current_user = @user
-    login(@user.email, @user.password)
-end
 
 Given('another users recipe {string} exists') do |recipe|
-    User.create(:email => 'fake@user.com', :password => 'testtest', :password_confirmation => 'testtest')
+    User.create(roles_mask: 1, :email => 'fake@user.com', :password => 'testtest', :password_confirmation => 'testtest')
     login("fake@user.com", "testtest")
     new_recipe(recipe)
     visit(destroy_user_session_path)
@@ -69,6 +77,21 @@ end
 When /^(?:|I )go to (.+)$/ do |page_name|
     visit path_to(page_name)
 end
+
+
+When('I click on link {string}') do |string|
+    within('td', text: string) do
+        click_link(string)
+        save_and_open_page
+    end
+end
+
+
+
+
+
+
+
 
 module LoginSteps
     def login(email, password)
@@ -91,7 +114,7 @@ module RecipeSteps
     def new_recipe(title)
         visit(new_recipe_path)
         fill_in("Title", :with => title)
-        click_button("Save Changes")
+        click_button('Save Changes')
     end
 end
 
