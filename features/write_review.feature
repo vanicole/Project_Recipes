@@ -9,3 +9,7 @@ Scenario: Add a Review
     And I log in as registered user
     When I go to the recipes page
     And I click on link "Details"
+    And I follow "Add a Review"
+    And I select "9" from "Vote"
+    And I press "Add Review"
+    Then I should see "Vote: 9"

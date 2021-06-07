@@ -78,7 +78,7 @@ When /^(?:|I )go to (.+)$/ do |page_name|
     visit path_to(page_name)
 end
 
-
+# Per vedere Details da Recipes page
 When('I click on link {string}') do |string|
     within('td', text: string) do
         click_link(string)
@@ -87,11 +87,22 @@ When('I click on link {string}') do |string|
 end
 
 
+When('I follow {string}') do |string|
+    expect(page).to have_content(string)
+end
 
+When /^(?:|I )select "([^"]*)" from "([^"]*)"$/ do |value, field|
+    select(value, :from => field)
+end
 
+When('I press {string}') do |string|
+    click_button(string)
+    save_and_open_page
+end
 
-
-
+Then /^(?:|I )should see '([^"]*)'$/ do |text|
+    expect(page).to have_content(text)
+  end
 
 module LoginSteps
     def login(email, password)
