@@ -17,11 +17,14 @@ module NavigationHelpers
         when /^the sign up page$/
             '/users/sign_up'
   
-        when /^the myfavorite page$/
+        when /^the my favorite page$/
             '/users/favorites'
     
-        when /^the myrecipes page$/
+        when /^the my recipes page$/
             '/users/myrecipes'
+        
+        when /^the new recipe page$/
+            new_recipe_path
   
         when /^the recipes page$/
             '/recipes'

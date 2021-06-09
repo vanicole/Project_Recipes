@@ -15,6 +15,9 @@ class User < ApplicationRecord
          has_many :favorite_recipes, dependent: :destroy
          has_many :favorites, through: :favorite_recipes, source: :recipe, dependent: :destroy
 
+         validates :email, presence: true
+
+
         def is_registeredUser?
           return (self.roles_mask & 1) == 1
         end

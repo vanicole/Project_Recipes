@@ -68,8 +68,10 @@ group :test do
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
   gem 'rexml'
-
-  gem 'cucumber-rails'
+  
+  gem 'rails-controller-testing'
+  
+  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'launchy'
   gem 'rspec-rails'

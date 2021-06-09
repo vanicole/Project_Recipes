@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, :path_names => {:sign_out => 'logout'}, controllers: { registrations: "users/registrations", omniauth_callbacks: 'users/omniauth_callbacks' }
-  root 'recipes#homepage' 
+  root 'recipes#index' 
 
   get 'users/favorites'
   get 'users/myrecipes'
