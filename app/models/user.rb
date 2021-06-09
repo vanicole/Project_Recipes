@@ -15,8 +15,8 @@ class User < ApplicationRecord
          has_many :favorite_recipes, dependent: :destroy
          has_many :favorites, through: :favorite_recipes, source: :recipe, dependent: :destroy
 
-         validates :email, presence: true
-
+         VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+         validates :email, presence: true, format: { with: VALID_EMAIL_REGEX}
 
         def is_registeredUser?
           return (self.roles_mask & 1) == 1
