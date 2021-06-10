@@ -17,7 +17,7 @@ class User < ApplicationRecord
 
          VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
          validates :email, presence: true, format: { with: VALID_EMAIL_REGEX}
-
+         
         def is_registeredUser?
           return (self.roles_mask & 1) == 1
         end
@@ -50,8 +50,6 @@ class User < ApplicationRecord
           self.save
         end
 
-
-
         def self.from_omniauth(access_token)
           data = access_token.info
     
@@ -63,6 +61,5 @@ class User < ApplicationRecord
           end
           user
         end
-    
 end
 

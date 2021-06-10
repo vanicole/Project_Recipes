@@ -28,7 +28,6 @@ Given('I log in as registered user') do
     login(@user.email, @user.password)
 end
 
-
 Given /^I am a logged in admin user$/ do
     @user = User.create!(id: 100, roles_mask: 3, :email => 'admin@test.com', :password => 'testtest')
     @current_user = @user
@@ -38,6 +37,7 @@ end
 
 Given /^I am not authenticated$/ do
     visit new_user_session_path 
+    #save_and_open_page
 end
 
 Given /^I am a banned user$/ do
@@ -66,18 +66,15 @@ Then /^(?:|I )should be on (.*)$/ do |page_name|
     #save_and_open_page
 end
   
-
 Then('I should see {string}') do |string|
     expect(page).to have_content(string)
 end
-
 
 When /^I register as (.+), (.+)$/ do |email, password|
     register(email, password)
     @user = User.find_by(email: email)
     @current_user = @user
 end
-
 
 Given('another users recipe {string} exists') do |recipe|
     User.create(roles_mask: 1, :email => 'fake@user.com', :password => 'testtest', :password_confirmation => 'testtest')
@@ -86,7 +83,6 @@ Given('another users recipe {string} exists') do |recipe|
     visit(destroy_user_session_path)
     #save_and_open_page
 end
-
 
 When /^(?:|I )go to (.+)$/ do |page_name|
     visit path_to(page_name)
@@ -132,7 +128,6 @@ end
 When('I fill in {string} with {string}') do |field, value|
     fill_in(field, :with => value)
 end
-
 
 module LoginSteps
     def login(email, password)
