@@ -90,7 +90,7 @@ end
 
 When /^(?:|I )go to (.+)$/ do |page_name|
     visit path_to(page_name)
-    save_and_open_page
+    #save_and_open_page
 end
 
 # Per vedere Details da Recipes page
@@ -120,7 +120,7 @@ end
 
 Then('I shoud see {string}') do |string|
     expect(page).to have_content(text)
-    save_and_open_page
+    #save_and_open_page
 end
 
 Then ("I should not see link {string}") do |args1|
@@ -131,7 +131,7 @@ end
 
 Then ("I should see link {string}") do |args1|
     expect(page).to have_link(text:/\A#{args1}\Z/)
-    save_and_open_page
+    #save_and_open_page
 end
 
 Then('I should have created a new recipe {string}') do |string|
