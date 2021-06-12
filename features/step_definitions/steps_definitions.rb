@@ -14,12 +14,21 @@ Given /^(?:|I )am on (.+)$/ do |page_name|
     visit path_to(page_name)
 end
 
+Given /^I am not a registered user$/ do
+    @user = nil
+end
+
 Given /^I am a registered user$/ do
     @user = User.create!(:email => 'test@test.com', :password => 'testtest', :password_confirmation => 'testtest')
 end
 
-Given /^I am not a registered user$/ do
-    @user = nil
+Given /^I am a banned user$/ do
+    @user = User.create!(:roles_mask => 0, :email => 'banned@user.com', :password => 'testtest', :password_confirmation => 'testtest')
+end
+
+Given /^I am not authenticated$/ do
+    visit new_user_session_path 
+    #save_and_open_page
 end
 
 Given('I log in as registered user') do 
@@ -35,14 +44,6 @@ Given /^I am a logged in admin user$/ do
     #save_and_open_page
 end
 
-Given /^I am not authenticated$/ do
-    visit new_user_session_path 
-    #save_and_open_page
-end
-
-Given /^I am a banned user$/ do
-    @user = User.create!(:roles_mask => 0, :email => 'banned@user.com', :password => 'testtest', :password_confirmation => 'testtest')
-end
 
 When /^I log in$/ do
     if @user == nil
@@ -59,6 +60,9 @@ Given('I log in as banned user') do
     login(@user.email, @user.password)
 end
 
+Then('I should see {string}') do |string|
+    expect(page).to have_content(string)
+end
 
 Then /^(?:|I )should be on (.*)$/ do |page_name|
     current_path = URI.parse(current_url).path
@@ -66,10 +70,6 @@ Then /^(?:|I )should be on (.*)$/ do |page_name|
     #save_and_open_page
 end
   
-Then('I should see {string}') do |string|
-    expect(page).to have_content(string)
-end
-
 When /^I register as (.+), (.+)$/ do |email, password|
     register(email, password)
     @user = User.find_by(email: email)
@@ -84,9 +84,13 @@ Given('another users recipe {string} exists') do |recipe|
     #save_and_open_page
 end
 
+Given ('another user exists') do
+    User.create(roles_mask: 1, :email => 'other@user.com', :password => 'testtest', :password_confirmation => 'testtest')
+end
+
 When /^(?:|I )go to (.+)$/ do |page_name|
     visit path_to(page_name)
-    #save_and_open_page
+    save_and_open_page
 end
 
 # Per vedere Details da Recipes page
@@ -110,9 +114,24 @@ When('I press {string}') do |string|
     #save_and_open_page
 end
 
+When('I press link {string}') do |string|
+    click_link(string)
+end
+
 Then('I shoud see {string}') do |string|
     expect(page).to have_content(text)
+    save_and_open_page
+end
+
+Then ("I should not see link {string}") do |args1|
+    expect(page).not_to have_link(text:/\A#{args1}\Z/)
     #save_and_open_page
+end
+
+
+Then ("I should see link {string}") do |args1|
+    expect(page).to have_link(text:/\A#{args1}\Z/)
+    save_and_open_page
 end
 
 Then('I should have created a new recipe {string}') do |string|

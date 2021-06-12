@@ -1,17 +1,6 @@
-<style>
-  
-  table, th, td {
-    border: 0.5px solid black;
-    text-align-last: center;
-  }
-  h1 {
-      text-align-last: center;
-  }
-
-</style>
-
-<div class="center jumbotron">
-    <h1> User List </h1>
+<h1 style = "text-align-last: center"> User List </h1>
+<hr>
+<div class="container">
     <table style="width:100%">
         <tr>
             <th> Email </th>
@@ -22,7 +11,7 @@
         </tr>
 
         <% @users.each do |user| %>
-            <tr>
+            <tr style = "text-align-last: center">
                 <td><%= user.email %></td>
                 <td><%= user.is_registeredUser? %></td>
                 <td><%= user.is_admin? %></td>
@@ -43,6 +32,7 @@
         <% end %>
     </table>
 </div>
+<hr/>
 <%= link_to "Back to recipe list", recipes_path, class: "btn btn-sm btn-primary" %>
-<br/>
+
 

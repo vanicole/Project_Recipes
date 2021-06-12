@@ -39,14 +39,13 @@
     </div>
     <hr>
 
-    
     <% if not current_user.nil? %> 
       <b>Roles : </b> 
       <% if current_user.is_registeredUser? %>
         Registered User
       <%end %>
       <% if current_user.is_admin? %>
-        <%= link_to "Admin", admin_view_path %>
+        --> Admin
       <%end %>
       <% if current_user.is_banned? %>
         Banned Registered User

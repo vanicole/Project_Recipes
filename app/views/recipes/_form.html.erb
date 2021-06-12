@@ -39,15 +39,6 @@
     <%= form.text_area :steps %>
   </div>
 
-  <div class="form-group">
-    <%= form.label :image do %>
-      <%= form.hidden_field :image_cache %>
-      <%= form.file_field :image %>
-    <% end %>
-    <%= form.label :remove_image %>
-    <%= form.check_box :remove_image %>
-  </div>
-
   <div>
       <%= form.label :link, 'YouTube' %>
       <%= form.url_field :link, :class => "form-control", :placeholder => "Youtube link", :pattern => "(?:https?:\/\/)?(?:youtu\.be\/|(?:www\.)?youtube\.com\/watch(?:\.php)?\?.*v=)([a-zA-Z0-9\-_]+)" %>
