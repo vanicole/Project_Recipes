@@ -25,7 +25,13 @@
       .form-group.col-sm-2 
         = label_tag :submit, "Search Recipes", :style => "visibility: hidden; display:block;"
         = submit_tag 'Search Recipes', :class => 'btn btn-primary'
+
 %br
+- if can? :create, Recipe
+  %td= link_to "Add A New Recipe", new_recipe_path, class: "btn btn-sm btn-primary"
+
+%br
+%br 
 %table{style: "width:100%"}
   %tr
     %th Title
@@ -38,8 +44,4 @@
       %td= recipe.description
       %td= recipe.averageScore
       %td= link_to "Details", recipe_path(recipe)
-%br
-- if can? :create, Recipe
-  %td= link_to "Add A New Recipe", new_recipe_path, class: "btn btn-sm btn-primary"
 
-%br
