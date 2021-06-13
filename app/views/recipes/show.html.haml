@@ -2,11 +2,13 @@
     table, th {
         border: 1px solid black;
         text-align-last: center;
+        background-color: white;
     }
     h1 {
     text-align-last: center;
     }
 
+%br 
 %h1 #{@recipe.title}
  
 .container 
@@ -87,9 +89,9 @@
                     %td
             - if can? :destroy, Recipe
                 %td= link_to 'Delete recipe', recipe_path(@recipe), :method => :delete, data: {confirm: "Are you sure?"}, :class => 'btn btn-outline-primary btn-sm'
-                
         .col-sm
-            %table{style: "width:50%", align: "right"}
+            %br 
+            %table{style: "width:60%", align: "right"}
                 %tr
                     %th           
                         Category:
