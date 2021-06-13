@@ -1,0 +1,40 @@
+:css
+  table, th, td {
+    border: 1px solid black;
+    text-align-last: center;
+    background-color: #ebebeb
+  }
+  h1 {
+      text-align-last: center;
+  }
+  body {
+      background-color: #6dd6c2
+  }
+
+%h1{style: "text-align-last: center"} User List
+%hr
+.container
+  %table{style: "width:100%"}
+    %tr
+      %th Email
+      %th is User?
+      %th is Admin?
+      %th Toggle Ban
+      %th Toggle Admin
+    - @users.each do |user|
+      %tr{style: "text-align-last: center"}
+        %td= user.email
+        %td= user.is_registeredUser?
+        %td= user.is_admin?
+        %td
+          - if user.is_banned?
+            = link_to "Remove Ban", admin_unban_user_path(user.id), method: :get, data: { confirm: "Are you sure?" }
+          - else
+            = link_to "Ban", admin_ban_user_path(user.id), method: :get, data: { confirm: "Are you sure?" }
+        %td
+          - if user.is_admin?
+            = link_to "Remove Admin", admin_unadmin_user_path(user.id), method: :get, data: { confirm: "Are you sure?" }
+          - else
+            = link_to "Make Admin", admin_admin_user_path(user.id), method: :get, data: { confirm: "Are you sure?" }
+%hr
+= link_to "Back to recipe list", recipes_path, class: "btn btn-sm btn-primary"
